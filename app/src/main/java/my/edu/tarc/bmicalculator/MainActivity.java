@@ -8,35 +8,34 @@ import android.view.View;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG_MESSAGE = "";
-    private EditText editTextWeight;
-    private EditText edittextHeight;
+
+    EditText editTextHeight, editTextWeight;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        editTextWeight = findViewById(R.id.editWeight);
-        edittextHeight = findViewById(R.id.editHeight);
+
+        editTextHeight = findViewById(R.id.editTextHeight);
+        editTextWeight = findViewById(R.id.editTextWeight);
+
     }
+
     public void calculateBMI(View view){
-        Double weightMsg;
-        Double heightMsg;
+        Intent intent = new Intent(this, SecondActivity.class);
+        double weight, height;
         if(TextUtils.isEmpty(editTextWeight.getText())){
-            editTextWeight.setError("Please enter your weight");
-            return;
-        }else if(TextUtils.isEmpty(edittextHeight.getText())){
-            edittextHeight.setError("Please enter your height");
-            return;
+            editTextWeight.setError("Please enter your weight.");
         }
-        weightMsg = Double.parseDouble(editTextWeight.getText().toString());
-        heightMsg = Double.parseDouble(edittextHeight.getText().toString());
+        if(TextUtils.isEmpty(editTextHeight.getText())){
+            editTextHeight.setError("Please enter your height.");
+        }
+        weight = Double.parseDouble(editTextWeight.getText().toString());
+        height = Double.parseDouble(editTextHeight.getText().toString());
 
-        double bmi = weightMsg/(heightMsg*heightMsg);
-
-        Intent intent = new Intent(this,SecondActivity.class);
-        intent.putExtra(TAG_MESSAGE,bmi);
+        double bmi = weight/(height*height);
+        intent.putExtra("BMI", bmi);
         startActivity(intent);
     }
-
 }
